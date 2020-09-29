@@ -1,0 +1,8 @@
+<purchases>
+    <purchase>
+        <purchaseId>1</purchaseId>
+        <cardId>111</cardId>
+        <itemId>1</itemId>
+        <bonusesAmount>10</bonusesAmount>
+    </purchase>
+</purchases>

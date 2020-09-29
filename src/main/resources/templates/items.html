@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Items</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Price</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${items.empty}">
+        <td colspan="3"> No Items Available</td>
+    </tr>
+    <tr th:each="item : ${items}">
+        <td><span th:text="${item.itemId}">Id</span></td>
+        <td><span th:text="${item.itemName}">Name</span></td>
+        <td><span th:text="${item.itemPrice}">Price</span></td>
+        <td>
+            <a th:href="@{/items/show/{id}(id=${item.itemId})}" class="btn btn-primary"><i
+                    class="fas fa-user-edit ml-2">More</i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

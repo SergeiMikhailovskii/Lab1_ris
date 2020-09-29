@@ -1,0 +1,17 @@
+<items>
+    <item>
+        <itemId>1</itemId>
+        <itemPrice>100</itemPrice>
+        <itemName>Item1</itemName>
+    </item>
+    <item>
+        <itemId>2</itemId>
+        <itemPrice>200</itemPrice>
+        <itemName>Item2</itemName>
+    </item>
+    <item>
+        <itemId>3</itemId>
+        <itemPrice>300</itemPrice>
+        <itemName>Item3</itemName>
+    </item>
+</items>

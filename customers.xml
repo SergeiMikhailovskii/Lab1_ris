@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customers>
+    <customer>
+        <customerId>1</customerId>
+        <cardId>111</cardId>
+        <bonusesAmount>60</bonusesAmount>
+        <customerName>Customer1</customerName>
+    </customer>
+    <customer>
+        <customerId>2</customerId>
+        <cardId>222</cardId>
+        <bonusesAmount>50</bonusesAmount>
+        <customerName>Customer2</customerName>
+    </customer>
+    <customer>
+        <customerId>3</customerId>
+        <cardId>333</cardId>
+        <bonusesAmount>100</bonusesAmount>
+        <customerName>Customer3</customerName>
+    </customer>
+</customers>
