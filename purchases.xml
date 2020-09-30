@@ -1,8 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <purchases>
     <purchase>
         <purchaseId>1</purchaseId>
         <cardId>111</cardId>
         <itemId>1</itemId>
         <bonusesAmount>10</bonusesAmount>
+    </purchase>
+    <purchase>
+        <purchaseId>2</purchaseId>
+        <cardId>111</cardId>
+        <itemId>1</itemId>
+        <bonusesAmount>60</bonusesAmount>
+    </purchase>
+    <purchase>
+        <purchaseId>3</purchaseId>
+        <cardId>111</cardId>
+        <itemId>1</itemId>
+        <bonusesAmount>20</bonusesAmount>
     </purchase>
 </purchases>

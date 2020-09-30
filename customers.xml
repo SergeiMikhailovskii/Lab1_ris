@@ -3,7 +3,7 @@
     <customer>
         <customerId>1</customerId>
         <cardId>111</cardId>
-        <bonusesAmount>60</bonusesAmount>
+        <bonusesAmount>35</bonusesAmount>
         <customerName>Customer1</customerName>
     </customer>
     <customer>

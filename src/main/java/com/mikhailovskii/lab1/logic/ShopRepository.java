@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ShopRepository {
+
     private static final String CUSTOMERS_PATH = "customers.xml";
     private static final String ITEMS_PATH = "items.xml";
     private static final String PURCHASES_PATH = "purchases.xml";
@@ -22,6 +23,7 @@ public class ShopRepository {
     void buyItem(int itemId, int cardId, int bonusesAmount) throws NoSuchElementException {
         List<Item> items = getItems();
         List<Customer> customers = getCustomers();
+        List<Purchase> purchases = getPurchaseList();
 
         /*
            Bonuses = bonuses - existing bonuses + 10% from item price
@@ -39,9 +41,15 @@ public class ShopRepository {
             }
         }).collect(Collectors.toList());
 
-        writeCustomers(customers);
+        purchases.add(new Purchase(
+                purchases.get(purchases.size() - 1).getPurchaseId() + 1,
+                cardId,
+                itemId,
+                bonusesAmount,
+                null));
 
-        System.out.println();
+        writeCustomers(customers);
+        writePurchases(purchases);
     }
 
     List<Item> getItems() {
@@ -84,6 +92,21 @@ public class ShopRepository {
         }
     }
 
+    private void writePurchases(List<Purchase> purchases) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(PurchaseList.class);
+            Marshaller marshaller = jaxbContext.createMarshaller();
+
+            PurchaseList purchaseList = new PurchaseList();
+            purchaseList.setPurchases((ArrayList<Purchase>) purchases);
+
+            marshaller.marshal(purchaseList, new File(PURCHASES_PATH));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     List<Purchase> getCardInfo(int cardNumber) {
         List<Purchase> purchases = getUserPurchases(cardNumber);
 
@@ -95,20 +118,22 @@ public class ShopRepository {
     }
 
     private List<Purchase> getUserPurchases(int cardNumber) {
+        List<Purchase> purchaseList = getPurchaseList();
+        List<Item> items = getItems();
+
+        return purchaseList.stream()
+                .filter(it -> it.getCardId() == cardNumber)
+                .peek(it -> it.setItemName(
+                        items.stream().filter(item -> item.getItemId() == it.getItemId()).findFirst().get().getItemName()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Purchase> getPurchaseList() {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(PurchaseList.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            PurchaseList purchaseList = (PurchaseList) unmarshaller.unmarshal(new File(PURCHASES_PATH));
-            List<Item> items = getItems();
-
-            return purchaseList.getPurchases().stream()
-                    .filter(it -> it.getCardId() == cardNumber)
-                    .peek(it -> it.setItemName(
-                            items.stream().filter(item -> item.getItemId() == it.getItemId()).findFirst().get().getItemName()))
-                    .collect(Collectors.toList());
-
+            return ((PurchaseList) unmarshaller.unmarshal(new File(PURCHASES_PATH))).getPurchases();
         } catch (JAXBException e) {
-            e.printStackTrace();
             return new ArrayList<>();
         }
     }
