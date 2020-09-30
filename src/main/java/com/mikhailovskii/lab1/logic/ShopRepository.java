@@ -138,4 +138,8 @@ public class ShopRepository {
         }
     }
 
+    int getBonusesAmount(int cardId) {
+        List<Customer> customers = getCustomers();
+        return customers.stream().filter(it -> it.getCardId() == cardId).findFirst().orElseThrow().getBonusesAmount();
+    }
 }

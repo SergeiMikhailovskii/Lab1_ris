@@ -73,6 +73,7 @@ public class ShopController {
         try {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("/cardInfo.html");
+            modelAndView.addObject("bonusesLeft", shopRepository.getBonusesAmount(Integer.parseInt(cardNumber)));
             modelAndView.addObject("purchases", shopRepository.getCardInfo(Integer.parseInt(cardNumber)));
 
             return modelAndView;
