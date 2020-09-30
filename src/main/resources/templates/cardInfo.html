@@ -13,7 +13,7 @@
     <tr>
         <th>Id</th>
         <th>Bonuses amount</th>
-        <th>Item id</th>
+        <th>Item name</th>
     </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
     <tr th:each="purchase : ${purchases}">
         <td><span th:text="${purchase.purchaseId}">Id</span></td>
         <td><span th:text="${purchase.bonusesAmount}">Bonuses amount</span></td>
-        <td><span th:text="${purchase.itemId}">Item id</span></td>
+        <td><span th:text="${purchase.itemName}">Item name</span></td>
     </tr>
     </tbody>
 </table>

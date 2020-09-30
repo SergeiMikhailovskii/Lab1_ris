@@ -35,4 +35,8 @@ public class Purchase implements Serializable {
     @Setter
     private int bonusesAmount;
 
+    @Getter
+    @Setter
+    private String itemName;
+
 }

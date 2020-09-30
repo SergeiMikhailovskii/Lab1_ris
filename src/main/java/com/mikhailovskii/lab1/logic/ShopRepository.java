@@ -98,9 +98,15 @@ public class ShopRepository {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(PurchaseList.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            PurchaseList itemList = (PurchaseList) unmarshaller.unmarshal(new File(PURCHASES_PATH));
+            PurchaseList purchaseList = (PurchaseList) unmarshaller.unmarshal(new File(PURCHASES_PATH));
+            List<Item> items = getItems();
 
-            return itemList.getPurchases().stream().filter(it -> it.getCardId() == cardNumber).collect(Collectors.toList());
+            return purchaseList.getPurchases().stream()
+                    .filter(it -> it.getCardId() == cardNumber)
+                    .peek(it -> it.setItemName(
+                            items.stream().filter(item -> item.getItemId() == it.getItemId()).findFirst().get().getItemName()))
+                    .collect(Collectors.toList());
+
         } catch (JAXBException e) {
             e.printStackTrace();
             return new ArrayList<>();
