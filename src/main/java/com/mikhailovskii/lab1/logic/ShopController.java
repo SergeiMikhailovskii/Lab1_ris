@@ -1,7 +1,9 @@
 package com.mikhailovskii.lab1.logic;
 
 import com.mikhailovskii.lab1.entity.Item;
+import com.mikhailovskii.lab1.entity.Purchase;
 import com.mikhailovskii.lab1.exception.BaseException;
+import com.mikhailovskii.lab1.exception.CardNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -65,23 +67,25 @@ public class ShopController {
         }
 
         shopRepository.buyItem(itemId, numCardId, numBonusesAmount);
-        return "/extendedInfo.html";
+        return "/index.html";
     }
 
     @GetMapping("/cardInfo")
     public ModelAndView getCardInfo(@RequestParam String cardNumber) {
         try {
+            List<Purchase> purchases = shopRepository.getCardInfo(Integer.parseInt(cardNumber));
+
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("/cardInfo.html");
             modelAndView.addObject("bonusesLeft", shopRepository.getBonusesAmount(Integer.parseInt(cardNumber)));
-            modelAndView.addObject("purchases", shopRepository.getCardInfo(Integer.parseInt(cardNumber)));
+            modelAndView.addObject("purchases", purchases);
 
             return modelAndView;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+        } catch (CardNotFoundException e) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("/error.html");
+            return modelAndView;
         }
-
-        return null;
     }
 
     @ExceptionHandler(BaseException.class)

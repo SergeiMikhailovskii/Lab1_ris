@@ -1,6 +1,7 @@
 package com.mikhailovskii.lab1.logic;
 
 import com.mikhailovskii.lab1.entity.*;
+import com.mikhailovskii.lab1.exception.CardNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;
@@ -124,7 +125,7 @@ public class ShopRepository {
         return purchaseList.stream()
                 .filter(it -> it.getCardId() == cardNumber)
                 .peek(it -> it.setItemName(
-                        items.stream().filter(item -> item.getItemId() == it.getItemId()).findFirst().get().getItemName()))
+                        items.stream().filter(item -> item.getItemId() == it.getItemId()).findFirst().orElseThrow(() -> new CardNotFoundException(cardNumber)).getItemName()))
                 .collect(Collectors.toList());
     }
 

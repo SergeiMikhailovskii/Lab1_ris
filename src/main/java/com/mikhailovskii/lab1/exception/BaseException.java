@@ -1,8 +1,8 @@
 package com.mikhailovskii.lab1.exception;
 
-public class BaseException extends Exception {
+public class BaseException extends RuntimeException {
 
-    public BaseException(String message) {
+    BaseException(String message) {
         super(message);
     }
 
